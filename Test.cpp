@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <string>
 #include <unistd.h>
-#include <algorithm>
 using namespace std;
 using namespace ariel;
 
