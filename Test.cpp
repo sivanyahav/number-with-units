@@ -100,24 +100,28 @@ TEST_CASE("Operator -"){
     CHECK_THROWS(NumberWithUnits(1,"year")-NumberWithUnits(1,"week"));
 
 }
-// TEST_CASE("Operator -="){
-//     ifstream unitsFile{testFile};
-//     NumberWithUnits::read_units(unitsFile);
+TEST_CASE("Operator -="){
+    ifstream unitsFile{testFile};
+    NumberWithUnits::read_units(unitsFile);
 
-//     //Correct conversions
-//     CHECK((NumberWithUnits(400,"day")-=NumberWithUnits(1,"year"))==NumberWithUnits(35,"day"));
-//     CHECK((NumberWithUnits(60,"min")-=NumberWithUnits(1,"hour"))==NumberWithUnits(0,"min"));
-//     CHECK((NumberWithUnits(2000,"min")-=NumberWithUnits(1,"day"))==NumberWithUnits(560,"min"));
-//     CHECK((NumberWithUnits(120000,"sec")-=NumberWithUnits(1,"day"))==NumberWithUnits(33600,"sec"));
+    NumberWithUnits sec{120000,"km"};
+    NumberWithUnits min{2000,"min"};
+    NumberWithUnits day{400,"day"};
 
-//     //Incorrect conversions
-//     CHECK_THROWS(NumberWithUnits(1,"day")-=NumberWithUnits(1,"ILS"));
-//     CHECK_THROWS(NumberWithUnits(1,"min")-=NumberWithUnits(1,"km"));
+    //Correct conversions
+    CHECK((day-=NumberWithUnits{1,"year"})==NumberWithUnits{35,"day"});
+    CHECK((min-=NumberWithUnits{1,"day"})==NumberWithUnits{560,"min"});
+    CHECK((min-=NumberWithUnits{1,"hour"})==NumberWithUnits{500,"min"});
+    CHECK((sec-=NumberWithUnits{1,"day"})==NumberWithUnits{33600,"sec"});
 
-//     //Units do not exist
-//     CHECK_THROWS_MESSAGE(NumberWithUnits(1,"kg")-=NumberWithUnits(1,"g"));
-//     CHECK_THROWS_MESSAGE(NumberWithUnits(1,"year")-=NumberWithUnits(1,"week"));
-// }
+    //Incorrect conversions
+    CHECK_THROWS(day-=NumberWithUnits{1,"ILS"});
+    CHECK_THROWS(min-=NumberWithUnits{1,"km"});
+
+    //Units do not exist
+    CHECK_THROWS(sec-=NumberWithUnits{1,"g"});
+    CHECK_THROWS(day-=NumberWithUnits{1,"week"});
+}
 TEST_CASE("Operator - unari"){
     ifstream unitsFile{testFile};
     NumberWithUnits::read_units(unitsFile);
