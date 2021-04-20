@@ -7,7 +7,7 @@ using namespace ariel;
 
 namespace ariel{
     
-    static map<string, map<string, float> > conversionMap;
+    static map<string, map<string, double> > conversionMap;
 
     double conversion(double value, const string from, const string to){
         if(from == to) {return value;}
@@ -19,9 +19,9 @@ namespace ariel{
 
     void updateMap(const string unit1, const string unit2){
         for(auto [key, value] : conversionMap[unit2]){
-            double w = conversionMap[unit1][unit2] * value;
-            conversionMap[unit1][key] = w;
-            conversionMap[key][unit1] = 1/w;
+            double v = conversionMap[unit1][unit2] * value;
+            conversionMap[unit1][key] = v;
+            conversionMap[key][unit1] = 1/v;
         }
     }
 
